@@ -16,3 +16,9 @@ I fixed the error by increasing the size of a powers of tau to 14 which is bigge
 
 #### Q1.3
 I think that using zero-knowledge proof here would require a lot of gas to compute, which means that creating the total looking of merkle tree would be inefficient especially for congested networks including Ethereum. [The smart contract that is in solidity pages](https://solidity-by-example.org/app/merkle-tree/) have a function to verify a given block in merkle tree by accepting tree nodes as a parameter. Meanwhile, there are plethora of projects that try to implement zk-Rollups in Layer 2 sidechains including Loopring that transactions are uploaded to Layer 2 sidechains together, and the verification data is uploaded to Layer 1 blockchain.
+
+#### Q1.4
+* checkout the following file
+```
+./q1/execute.sh
+```
