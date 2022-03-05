@@ -1536,13 +1536,13 @@ Fr_copy(aux_dest,&circuitConstants[3]);
 PFrElement aux_dest = &lvar[1];
 // load src
 // end load src
-Fr_copy(aux_dest,&circuitConstants[0]);
+Fr_copy(aux_dest,&circuitConstants[3]);
 }
 {
 PFrElement aux_dest = &lvar[2];
 // load src
 // end load src
-Fr_copy(aux_dest,&circuitConstants[3]);
+Fr_copy(aux_dest,&circuitConstants[0]);
 }
 {
 uint aux_create = 0;
