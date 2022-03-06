@@ -20,7 +20,7 @@ module.exports = {
   solidity: "0.8.4",
   networks: {
     ropsten: {
-      url: "https://eth-ropsten.alchemyapi.io/v2/buoalXWPMfNhJBI1QCGvip_kea9IWoFO",
+      url: "https://eth-ropsten.alchemyapi.io/v2/" + process.env.INFURA_API_KEY,
       accounts: [process.env.METAMASK_PRIVATE_KEY],
       gas: 2100000,
       gasPrice: 8000000000
