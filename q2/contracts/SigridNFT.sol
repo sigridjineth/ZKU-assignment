@@ -26,7 +26,6 @@ contract SigridNFT is ERC721URIStorage, Ownable {
         uint128 tokenMinted;
         bytes32 merkleRoot;
         bytes32[] whitelistedAddresses;
-        string ipfsHash;
     }
 
     /**
@@ -93,14 +92,15 @@ contract SigridNFT is ERC721URIStorage, Ownable {
     function issueToken(
         string memory _cohortId,
         address to,
-        bool _isAdmin,
-        string memory _ipfsHash
+        bool _isAdmin
     ) internal limitCheck(_cohortId, to) returns (uint256) {
         uint128 nextCohortTokenIndex = cohorts[_cohortId].tokenMinted;
         string memory _uri = string(
             abi.encodePacked(
-                contractBaseURI,
-                _ipfsHash
+                _cohortId,
+                "-",
+                uint2str(nextCohortTokenIndex),
+                "/metadata.json"
             )
         );
 
@@ -146,13 +146,12 @@ contract SigridNFT is ERC721URIStorage, Ownable {
     function adminClaimToken(
         string memory _cohortId,
         bytes32[] memory _proof,
-        address to,
-        string memory _ipfsHash
+        address to
     ) external onlyAdmin merkleCheck(_cohortId, _proof, to) returns (uint256) {
-        return issueToken(_cohortId, to, true, _ipfsHash);
+        return issueToken(_cohortId, to, true);
     }
 
-    function claimToken(string memory _cohortId, bytes32[] memory _proof, string memory _ipfsHash)
+    function claimToken(string memory _cohortId, bytes32[] memory _proof)
         external
         merkleCheck(_cohortId, _proof, msg.sender)
         returns (uint256)
@@ -163,7 +162,7 @@ contract SigridNFT is ERC721URIStorage, Ownable {
             "address not eligible for claim"
         );
 
-        return issueToken(_cohortId, msg.sender, false, _ipfsHash);
+        return issueToken(_cohortId, msg.sender, false);
     }
 
     function setAllowsTransfers(bool _allowsTransfers) external onlyAdmin {
@@ -174,15 +173,14 @@ contract SigridNFT is ERC721URIStorage, Ownable {
         string memory _cohortId,
         uint128 _limit,
         bytes32 _merkleRoot,
-        bytes32[] memory _whitelistedAddresses,
-        string memory _ipfsHash
+        bytes32[] memory _whitelistedAddresses
     ) external onlyAdmin {
         require(
             cohorts[_cohortId].limit == 0,
             " Cohort already exists"
         );
         require(_limit > 0, "Limit must be greater than 0");
-        Cohort memory cohort = Cohort(_limit, 0, _merkleRoot, _whitelistedAddresses, _ipfsHash);
+        Cohort memory cohort = Cohort(_limit, 0, _merkleRoot, _whitelistedAddresses);
         cohorts[_cohortId] = cohort;
     }
 
@@ -206,11 +204,10 @@ contract SigridNFT is ERC721URIStorage, Ownable {
         cohorts[_cohortId].limit = _limit;
     }
 
-    function _getCohortDetails(string memory _cohortId) external view returns (bytes32[] memory, bytes32, string memory) {
+    function _getCohortDetails(string memory _cohortId) external view returns (bytes32[] memory, bytes32) {
         return(
             cohorts[_cohortId].whitelistedAddresses,
-            cohorts[_cohortId].merkleRoot,
-            cohorts[_cohortId].ipfsHash
+            cohorts[_cohortId].merkleRoot
         );
     }
 

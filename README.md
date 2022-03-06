@@ -22,3 +22,11 @@ I think that using zero-knowledge proof here would require a lot of gas to compu
 ```
 ./q1/execute.sh
 ```
+
+#### Q2
+* I have rendered the contract on the following file
+```
+./q2/contracts/SigridNFT.sol
+```
+* Here is the screenshots for deploying contracts and its gas fees.
+![contracts](https://user-images.githubusercontent.com/41055141/156906171-b06ad45c-35a2-4a88-871d-aff216bfaebe.png)

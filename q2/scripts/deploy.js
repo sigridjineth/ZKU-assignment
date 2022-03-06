@@ -14,8 +14,8 @@ async function main() {
   // await hre.run('compile');
 
   // We get the contract to deploy
-  const Greeter = await hre.ethers.getContractFactory("Greeter");
-  const greeter = await Greeter.deploy("Hello, Hardhat!");
+  const SigridNFT = await hre.ethers.getContractFactory("SigridNFT");
+  const greeter = await SigridNFT.deploy("www.thisissigrid.com");
 
   await greeter.deployed();
 
